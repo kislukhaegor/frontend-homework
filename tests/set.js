@@ -84,6 +84,18 @@ QUnit.module('Тестируем функцию set', function () {
 		assert.deepEqual(set(object2, '.bar.0.foobar', 'baz'), new2);
 	});
 
+	QUnit.test('set работает правильно c объектами без свойств', function (assert) {
+		const object = {
+			deep: {
+				nested: {
+					field: null
+				}
+			}
+		};
+
+		assert.deepEqual(set({}, '.deep.nested.field', null), object);
+	});
+
 	QUnit.test('set работает правильно c пустой строкой', function (assert) {
 		assert.deepEqual(set({}, '', null), null);
 		let obj = 123
@@ -124,6 +136,5 @@ QUnit.module('Тестируем функцию set', function () {
 
 		assert.deepEqual(set(object, 'deep.hested', {foo: 'bar'}), object3);
 		assert.deepEqual(set(object, 'deep', null), object4);
-
 	});
 });
