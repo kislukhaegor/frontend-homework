@@ -8,20 +8,27 @@ const set = (object, pathToField, value) => {
 	if (object === undefined) {
 		object = {};
 	}
+
 	let arr = pathToField.split('.');
-	let tmp = object;
+	let last_field = arr.pop();
 
 	// если в строке отсутсвует точка в начале, то начинать нужно с первого элемента массива	
-	let i = 0;
+	let start_index = 0;
 	if (!arr[0]) {
-		i = 1;
+		start_index = 1;
 	}
-	for (; i < arr.length - 1; ++i) {
-		if (!(arr[i] in tmp)) {
-			tmp[arr[i]] = {};
+
+	const reduce_impl = (accumulator, currentValue, index, arr) => {
+		if (index < start_index) {
+			return accumulator;
 		}
-		tmp = tmp[arr[i]];
+		if (!(currentValue in accumulator)) {
+			accumulator[currentValue] = {};
+		}
+		return accumulator[currentValue];
 	}
-	tmp[arr[arr.length - 1]] = value;
+
+	arr.reduce(reduce_impl, object)[last_field] = value;
+
 	return object;
 }
