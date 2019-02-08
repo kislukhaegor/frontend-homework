@@ -1,28 +1,27 @@
-'use strict'
+'use strict';
 
 const set = (object, pathToField, value) => {
-	let impl = (object, arr, value) => {
-		if (!arr.length) {
-			return;
-		}
-		if (arr.length == 1) {
-			object[arr[0]] = value;
-			return;
-		}
-		let key = arr.pop();
-		if (!(key in object)) {
-			object[key] = {};
-		}
-		return impl(object[key], arr, value);
-	}
 	if (!pathToField) {
 		object = value;
 		return value;
 	}
-	let arr = pathToField.split('.').reverse();
-	if (!arr[arr.length - 1]) {
-		arr.pop();
+	if (object === undefined) {
+		object = {};
 	}
-	impl(object, arr, value);
-	return object
+	let arr = pathToField.split('.');
+	let tmp = object;
+
+	// если в строке отсутсвует точка в начале, то начинать нужно с первого элемента массива	
+	let i = 0;
+	if (!arr[0]) {
+		i = 1;
+	}
+	for (; i < arr.length - 1; ++i) {
+		if (!(arr[i] in tmp)) {
+			tmp[arr[i]] = {};
+		}
+		tmp = tmp[arr[i]];
+	}
+	tmp[arr[arr.length - 1]] = value;
+	return object;
 }
