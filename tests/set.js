@@ -153,5 +153,11 @@ QUnit.module('Тестируем функцию set', function () {
 	QUnit.test('set не заменяет унаследованные свйоства', function (assert) {
 		assert.deepEqual(set({}, '.toString.foo', 'bar'), {toString: {foo: 'bar'}});
 	});
+
+	QUnit.test('set работает, если вместо pathToField передать не строку', function (assert) {
+		assert.deepEqual(set({}, {}, 'bar'), 'bar');
+		assert.deepEqual(set({}, null, 'bar'), 'bar');
+		assert.deepEqual(set({}, function() { return "foo"; }, 'bar'), 'bar');
+	});
 });
 

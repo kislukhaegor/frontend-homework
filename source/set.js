@@ -10,7 +10,7 @@
  */
 const set = (object, pathToField, value) => {
     debugger;
-    if (!pathToField) {
+    if (typeof(pathToField) != "string" && !(pathToField instanceof String) ) {
         return value;
     }
 
