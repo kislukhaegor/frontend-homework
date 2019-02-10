@@ -1,34 +1,47 @@
 'use strict';
 
+/**
+ * set the property of object.
+ * @param {Object} object - the object that will be changed
+ * @param {string} pathToField - path to the field to be set. 
+ *     If the field doesn't exist, it will be added
+ * @param {*} value - value to be set in property
+ * @returns {Object|*} returns changed object or value if pathToField is invalid 
+ */
 const set = (object, pathToField, value) => {
-	if (!pathToField) {
-		return value;
-	}
+    debugger;
+    if (!pathToField) {
+        return value;
+    }
 
-	if (object === undefined) {
-		object = {};
-	}
+    if (!(object instanceof Object)) {
+        object = {};
+    }
 
-	let arr_of_fields = pathToField.split('.');
-	let last_field = arr_of_fields.pop();
+    let arrOfFields = pathToField.split('.');
 
-	// если в строке отсутсвует точка в начале, то начинать нужно с первого элемента массива	
-	let start_index = 0;
-	if (!arr_of_fields[0]) {
-		start_index = 1;
-	}
+    // Пропуск начальных точек    
+    let startIndex = 0;
+    while (!arrOfFields[startIndex]) {
+        if (startIndex == arrOfFields.length) {
+            return value;
+        }
+        startIndex++;
+    }
 
-	const reduce_impl = (accumulator, currentValue, index, arr) => {
-		if (index < start_index) {
-			return accumulator;
-		}
-		if (!accumulator.hasOwnProperty(currentValue)) {
-			accumulator[currentValue] = {};
-		}
-		return accumulator[currentValue];
-	}
+    let lastField = arrOfFields.pop();
 
-	arr_of_fields.reduce(reduce_impl, object)[last_field] = value;
+    const reduceImpl = (accumulator, currentValue, index) => {
+        if (index < startIndex) {
+            return accumulator;
+        }
+        if (!accumulator.hasOwnProperty(currentValue)) {
+            accumulator[currentValue] = {};
+        }
+        return accumulator[currentValue];
+    }
 
-	return object;
+    arrOfFields.reduce(reduceImpl, object)[lastField] = value;
+
+    return object;
 }

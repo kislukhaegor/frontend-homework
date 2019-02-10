@@ -102,7 +102,7 @@ QUnit.module('Тестируем функцию set', function () {
 		assert.deepEqual(set(obj, '', 321), 321);
 	});
 
-	QUnit.test('set работает правильно с строками с ошибкой', function (assert) {
+	QUnit.test('точка в начале пути необязательна', function (assert) {
 		const object = {
 			deep: {
 				hested: {
@@ -136,5 +136,22 @@ QUnit.module('Тестируем функцию set', function () {
 
 		assert.deepEqual(set(object, 'deep.hested', {foo: 'bar'}), object3);
 		assert.deepEqual(set(object, 'deep', null), object4);
+
+		assert.deepEqual(set({}, '.....', 123), 123);
+		assert.deepEqual(set({}, '....foo', 123), {foo: 123});
+	});
+
+
+	QUnit.test('set работает, если вместо объекта передать невалидную сущность', function (assert) {
+		assert.deepEqual(set(123, '.foo', 'bar'), {foo: 'bar'});
+		assert.deepEqual(set(undefined, '.foo', 'bar'), {foo: 'bar'});
+		assert.deepEqual(set('123', '.foo', 'bar'), {foo: 'bar'});
+		assert.deepEqual(set(null, '.foo', 'bar'), {foo: 'bar'});
+	});
+
+
+	QUnit.test('set не заменяет унаследованные свйоства', function (assert) {
+		assert.deepEqual(set({}, '.toString.foo', 'bar'), {toString: {foo: 'bar'}});
 	});
 });
+
