@@ -141,7 +141,6 @@ QUnit.module('Тестируем функцию set', function () {
 		assert.deepEqual(set({}, '....foo', 123), {foo: 123});
 	});
 
-
 	QUnit.test('set работает, если вместо объекта передать невалидную сущность', function (assert) {
 		assert.deepEqual(set(123, '.foo', 'bar'), {foo: 'bar'});
 		assert.deepEqual(set(undefined, '.foo', 'bar'), {foo: 'bar'});
@@ -158,6 +157,13 @@ QUnit.module('Тестируем функцию set', function () {
 		assert.deepEqual(set({}, {}, 'bar'), 'bar');
 		assert.deepEqual(set({}, null, 'bar'), 'bar');
 		assert.deepEqual(set({}, function() { return "foo"; }, 'bar'), 'bar');
+	});
+
+	QUnit.test('set работает, если содержатся пустые строки в пути', function (assert) {
+		assert.deepEqual(set({}, 'foo..qwe..', 'bar'), {foo: {qwe: 'bar'}});
+		assert.deepEqual(set({}, '...foo.qwe..', 'bar'), {foo: {qwe: 'bar'}});
+		assert.deepEqual(set({}, '...foo...qwe', 'bar'), {foo: {qwe: 'bar'}});
+		assert.deepEqual(set({}, '...foo...qwe..', 'bar'), {foo: {qwe: 'bar'}});
 	});
 });
 

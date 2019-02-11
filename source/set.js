@@ -35,10 +35,16 @@ const set = (object, pathToField, value) => {
 
     let lastField = arrOfFields.pop();
 
+    // случай, когда в конце стоят точки
+    while (lastField === "") {
+        lastField = arrOfFields.pop();
+    }
+
     const reduceImpl = (accumulator, currentValue, index) => {
-        if (currentValue === '') {
+        if (currentValue == "") {
             return accumulator;
         }
+        console.log(accumulator, currentValue, currentValue === "");
         if (!accumulator.hasOwnProperty(currentValue)) {
             accumulator[currentValue] = {};
         }
