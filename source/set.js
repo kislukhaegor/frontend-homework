@@ -20,13 +20,13 @@ const set = (object, pathToField, value) => {
     let arrOfFields = pathToField.split('.');
 
     let startIndex = arrOfFields.findIndex((element) => {
-        if (element.valueOf() == "") {
+        if (element.valueOf() === "") {
             return false;
         }
         return true;
     });
 
-    if (startIndex == -1) {
+    if (startIndex === -1) {
         return value;
     }
 
@@ -36,12 +36,12 @@ const set = (object, pathToField, value) => {
     let lastField = arrOfFields.pop();
 
     // случай, когда в конце стоят точки
-    while (lastField.valueOf() == "") {
+    while (lastField.valueOf() === "") {
         lastField = arrOfFields.pop();
     }
 
     const reduceImpl = (accumulator, currentValue, index) => {
-        if (currentValue.valueOf() == "") {
+        if (currentValue.valueOf() === "") {
             return accumulator;
         }
         if (!accumulator.hasOwnProperty(currentValue)) {
