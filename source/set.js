@@ -9,7 +9,7 @@
  * @returns {Object|*} returns changed object or value if pathToField is invalid 
  */
 const set = (object, pathToField, value) => {
-    if (!(typeof(pathToField) == "string") && !(pathToField instanceof String) ) {
+    if ((typeof(pathToField)).valueOf() != "string" && !(pathToField instanceof String) ) {
         return value;
     }
 
@@ -20,7 +20,7 @@ const set = (object, pathToField, value) => {
     let arrOfFields = pathToField.split('.');
 
     let startIndex = arrOfFields.findIndex((element) => {
-        if (element === '') {
+        if (element.valueOf() == "") {
             return false;
         }
         return true;
@@ -36,15 +36,14 @@ const set = (object, pathToField, value) => {
     let lastField = arrOfFields.pop();
 
     // случай, когда в конце стоят точки
-    while (lastField === "") {
+    while (lastField.valueOf() == "") {
         lastField = arrOfFields.pop();
     }
 
     const reduceImpl = (accumulator, currentValue, index) => {
-        if (currentValue == "") {
+        if (currentValue.valueOf() == "") {
             return accumulator;
         }
-        console.log(accumulator, currentValue, currentValue === "");
         if (!accumulator.hasOwnProperty(currentValue)) {
             accumulator[currentValue] = {};
         }
