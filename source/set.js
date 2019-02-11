@@ -36,6 +36,9 @@ const set = (object, pathToField, value) => {
     let lastField = arrOfFields.pop();
 
     const reduceImpl = (accumulator, currentValue, index) => {
+        if (currentValue === '') {
+            return accumulator;
+        }
         if (!accumulator.hasOwnProperty(currentValue)) {
             accumulator[currentValue] = {};
         }
