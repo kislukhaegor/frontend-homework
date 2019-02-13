@@ -20,13 +20,13 @@ const set = (object, pathToField, value) => {
 
     let arrOfFields = pathToField.split('.');
 
-	// assignment to last field last signficant field
+    // assignment to last field last signficant field
     let lastField = arrOfFields.pop();
     while (lastField === "") {
-    	if (arrOfFields.length == 0) {
-			// process empty path
-    		return value
-    	}
+        if (arrOfFields.length == 0) {
+            // process empty path
+            return value
+        }
         lastField = arrOfFields.pop();
     }
 
