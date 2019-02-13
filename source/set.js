@@ -23,11 +23,12 @@ const set = (object, pathToField, value) => {
     // assignment to last field last signficant field
     let lastField = arrOfFields.pop();
     while (lastField === "") {
-        if (arrOfFields.length == 0) {
-            // process empty path
-            return value
-        }
         lastField = arrOfFields.pop();
+    }
+
+    // process empty path
+    if (lastField === undefined) {
+        return value
     }
 
     const reduceImpl = (accumulator, currentValue, index) => {
