@@ -10,7 +10,7 @@
  */
 
 const set = (object, pathToField, value) => {
-    if (typeof(pathToField) !== "string" && !(pathToField instanceof String) ) {
+    if (typeof(pathToField) !== "string" && !(pathToField instanceof String)) {
         return value;
     }
 
