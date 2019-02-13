@@ -20,21 +20,13 @@ const set = (object, pathToField, value) => {
 
     let arrOfFields = pathToField.split('.');
 
-    let startIndex = arrOfFields.findIndex((element) => {
-        if (element === "") {
-            return false;
-        }
-        return true;
-    });
-
-    if (startIndex === -1) {
-        return value;
-    }
-
+	// assignment to last field last signficant field
     let lastField = arrOfFields.pop();
-
-    // случай, когда в конце стоят точки
     while (lastField === "") {
+    	if (arrOfFields.length == 0) {
+			// process empty path
+    		return value
+    	}
         lastField = arrOfFields.pop();
     }
 
