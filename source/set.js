@@ -8,6 +8,7 @@
  * @param {*} value - value to be set in property
  * @returns {Object|*} returns changed object or value if pathToField is invalid 
  */
+
 const set = (object, pathToField, value) => {
     if ((typeof(pathToField)).valueOf() != "string" && !(pathToField instanceof String) ) {
         return value;
@@ -20,7 +21,7 @@ const set = (object, pathToField, value) => {
     let arrOfFields = pathToField.split('.');
 
     let startIndex = arrOfFields.findIndex((element) => {
-        if (element.valueOf() === "") {
+        if (element === "") {
             return false;
         }
         return true;
@@ -30,18 +31,15 @@ const set = (object, pathToField, value) => {
         return value;
     }
 
-    // Пропуск начальных точек    
-    arrOfFields = arrOfFields.splice(startIndex, arrOfFields.length - startIndex);
-
     let lastField = arrOfFields.pop();
 
     // случай, когда в конце стоят точки
-    while (lastField.valueOf() === "") {
+    while (lastField === "") {
         lastField = arrOfFields.pop();
     }
 
     const reduceImpl = (accumulator, currentValue, index) => {
-        if (currentValue.valueOf() === "") {
+        if (currentValue === "") {
             return accumulator;
         }
         if (!accumulator.hasOwnProperty(currentValue)) {
