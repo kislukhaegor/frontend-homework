@@ -27,7 +27,7 @@ const set = (object, pathToField, value) => {
     }
 
     // process empty path
-    if (lastField === undefined) {
+    if (typeof(lastField) === typeof(undefined)) {
         return value
     }
 
